@@ -1988,7 +1988,7 @@ notebook {
 //
 // Scrollbars
 //
-$_scrollbar_bg_color: rgba(black, 0.05);
+$_scrollbar_bg_color: transparent;
 
 scrollbar {
   $_slider_min_length: $large_size;
@@ -2003,10 +2003,10 @@ scrollbar {
   transition: 300ms $ease-out-quad;
 
   // scrollbar border
-  &.top { border-bottom: 1px solid $borders_color; }
-  &.bottom { border-top: 1px solid $borders_color; }
-  &.left { border-right: 1px solid $borders_color; }
-  &.right { border-left: 1px solid $borders_color; }
+  &.top { border-bottom: none; }
+  &.bottom { border-top: none; }
+  &.left { border-right: none; }
+  &.right { border-left: none; }
 
   button { border: none; }
 
@@ -2026,13 +2026,17 @@ scrollbar {
     min-height: $cont_padding;
     margin: -1px;
     border: 4px solid transparent;
-    border-radius: 8px;
+    border-left-width: 8px;
+    border-right: none;
     background-clip: padding-box;
     background-color: mix($fg_color, $bg_color, 40%);
 
-    &:hover { background-color: mix($fg_color, $bg_color, 30%); }
+    &:hover {
+      border-left-width: 2px;
+      background-color: $selected_bg_color;
+    }
 
-    &:hover:active { background-color: $selected_bg_color;}
+    &:hover:active { background-color: $sec_selected_bg_color;}
 
     &:disabled { background-color: transparent; }
   }
