@@ -14,6 +14,19 @@ terminal-window notebook {
 terminal-window,
 .mate-terminal {
 
+  decoration {
+    box-shadow: 0 3px 5px 0 if($variant == 'light', opacify($_wm_border, 0.1), opacify($_wm_border, 0.05)),
+                0 8px 8px 0 if($variant == 'light', opacify($_wm_border, 0.1), opacify($_wm_border, 0.05)),
+                0 0 0 2px $borders_color, 0 0 0 1px $base_color;
+
+    &:backdrop {
+      box-shadow: 0 3px 5px 0 transparent, 0 8px 8px 0 transparent,
+                  0 3px 3px 0 if($variant == 'light', opacify($_wm_border, 0.06), opacify($_wm_border, 0.03)),
+                  0 0 0 2px $borders_color, 0 0 0 1px $base_color;
+      transition: $backdrop_transition;
+    }
+  }
+
   notebook {
     > header.top {
       //padding-top: 3px;
@@ -28,11 +41,78 @@ terminal-window,
       }
     }
   }
+
+  scrollbar {
+    border: none;
+    background: none;
+  }
 }
 
 //
 // Nautilus
 //
+
+%nautilus_backimage {
+  background-image: -gtk-scaled(url("assets/backimage#{$asset_suffix}.png"),
+                                url("assets/backimage#{$asset_suffix}@2.png"));
+  background-repeat: no-repeat;
+  background-position: bottom right;
+}
+
+%headerbar_image {
+  background-image: -gtk-scaled(url("assets/logo.png"),
+                                url("assets/logo@2.png"));
+  background-repeat: no-repeat;
+  background-position: top left;
+
+  &:backdrop {
+    background-image: -gtk-scaled(url("assets/logo-backdrop.png"),
+                                url("assets/logo-backdrop@2.png"));
+    background-repeat: no-repeat;
+    background-position: top left;
+  }
+}
+
+%pathbar_box_button {
+  margin: 0;
+  padding: 1px 8px 3px 8px;
+  border-radius: 0;
+  background: none;
+  border: none;
+
+  &:hover {
+    background: none;
+    box-shadow: inset 0 -1px rgba($selected_bg_color, 0.5), 0 1px rgba($selected_bg_color, 0.5);
+  }
+  &:checked, &:active {
+    color: $header_fg;
+    background: none;
+    box-shadow: inset 0 -1px $selected_bg_color, 0 1px $selected_bg_color;
+  }
+}
+
+.nautilus-window headerbar {
+  .path-bar-box {
+    margin: $icon_padding 0;
+    border-radius: 2px;
+    color: $header_fg;
+    background-color: transparent;
+    border: 1px solid transparent;
+    button { @extend %pathbar_box_button; }
+
+    &.width-maximized {
+      border: 1px solid if($titlebar == 'light', rgba(black, 0.12), rgba(white, 0.12));
+      background-color: rgba($header_fg, 0.06);
+    }
+
+    // workaround for 3.30.1
+    &.background.frame {
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
+
 .nautilus-canvas-item {
   border-radius: 2px;
 }
@@ -71,23 +151,44 @@ terminal-window,
     padding-left: 0;
     
     &, &:backdrop {
-      box-shadow: inset 0 -1px if($variant=='light', rgba($dark_sidebar_icon_bg, 0.15), $dark_sidebar_icon_bg);
+      box-shadow: inset 0 -1px if($variant=='light', rgba($dark_sidebar_icon_bg, 0.15), $dark_sidebar_icon_bg),
+                  inset 38px 0 0 0 if($menu=='budgie', $dark_sidebar_icon_bg, transparent);
+    }
+
+    @if $menu == 'budgie' {
+      button.titlebutton {
+        &.appmenu  { // appmenu button
+          margin-left: -2px - $header_padding;
+          border: none;
+          min-height: 30px;
+          min-width: 30px;
+          border-radius: 50px;
+          color: transparent;
+          background-color: transparent;
+          background-image: -gtk-scaled(url("assets/logo.png"),
+                                        url("assets/logo@2.png"));
+          background-repeat: no-repeat;
+          background-position: center;
+
+          image { opacity: 0; } // Make menu button icon invisible
+
+          &:hover {
+            background-image: -gtk-scaled(url("assets/logo-hover.png"),
+                                          url("assets/logo-hover@2.png"));
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+
+          &:checked, &:active {
+            background-image: -gtk-scaled(url("assets/logo-active.png"),
+                                        url("assets/logo-active@2.png"));
+            background-repeat: no-repeat;
+            background-position: center;
+          }
+        }
+      }
     }
   }
-}
-
-%nautilus_backimage {
-  background-image: -gtk-+scaled(url("assets/backimage#{$asset_suffix}.png"),
-                                url("assets/backimage#{$asset_suffix}@2.png"));
-  background-repeat: no-repeat;
-  background-position: bottom right;
-}
-
-%headerbar_image {
-  background-image: -gtk-scaled(url("assets/logo.png"),
-                                url("assets/logo@2.png"));
-  background-repeat: no-repeat;
-  background-position: top left;
 }
 
 .nautilus-window,
@@ -97,17 +198,10 @@ terminal-window,
   // @extend %nautilus_backimage;
 }
 
-// Set nautilus background pictures
-//.nautilus-window headerbar {
-//  @extend %headerbar_image;
-//}
-
 .nautilus-window {
-
-  searchbar { border-top: 1px solid $borders_color; }
+//  searchbar { border-bottom: none; }
   .searchbar-container { margin-top: -1px; }
   actionbar { border-color: $solid_borders_color; }
-
 }
 
 .nautilus-window notebook,
@@ -379,6 +473,244 @@ button.documents-favorite:active:hover {
 .tweak-categories,
 .tweak-category:not(:selected):not(:hover) {
   background-image: _solid($base_color);
+}
+
+// Workaround for 3.26
+row#Focus,
+row#ClickMethod,
+row#StaticWorkspaceTweak, // for 3.26.0
+row#dynamic-workspaces,
+row#PrimaryWorkspaceTweak, // for 3.26.0
+row#workspaces-only-on-primary {
+  padding: 0;
+  border: 1px solid $borders_color;
+
+  row:not(:last-child) { border-bottom: 1px solid $borders_color; }
+
+  &.tweak > list { margin-top: -3px; }
+}
+
+// Add more spaces between title and list
+row#Focus,
+row#ClickMethod,
+row#PrimaryWorkspaceTweak, // for 3.26.0
+row#workspaces-only-on-primary {
+  margin-top: 4px;
+}
+
+//
+// Gnome Builder
+//
+// TODO: Merge this with the upstream stylesheet
+
+.gb-search-entry-occurrences-tag { background: none; }
+
+workbench.csd > stack.titlebar:not(headerbar) {
+  padding: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  headerbar {
+    &,
+    &:first-child,
+    &:last-child { border-radius: $_header_radius $_header_radius 0 0; }
+  }
+}
+
+editortweak .linked > entry.search:focus + .gb-linked-scroller { border-top-color: $selected_bg_color; }
+
+layouttab {
+  background-color: $base_color;
+}
+
+layout {
+  border: 1px solid $borders_color;
+  -PnlDockBin-handle-size: 1;
+}
+
+eggsearchbar box.search-bar {
+  border-bottom: 1px solid $borders_color;
+}
+
+pillbox {
+  color: $selected_fg_color;
+  background-color: $selected_bg_color;
+  border-radius: 3px;
+
+  &:disabled label { color: transparentize($selected_fg_color, 0.5) }
+}
+
+docktabstrip {
+  padding: 0 6px;
+
+  background-color: $bg_color;
+  border-bottom: 1px solid $borders_color;
+
+  docktab {
+    min-height: 28px;
+    border: solid transparent;
+    border-width: 0 1px;
+
+    label { opacity: 0.5; }
+    &:checked, &:hover { label { opacity: 1; }}
+
+    &:checked {
+      border-color: $borders_color;
+      background-color: $base_color;
+    }
+  }
+}
+
+dockbin {
+  border: 1px solid $borders_color;
+  -PnlDockBin-handle-size: 1;
+}
+
+dockpaned {
+  border: 1px solid $borders_color;
+}
+
+dockoverlayedge {
+  background-color: $bg_color;
+
+  docktabstrip {
+    padding: 0;
+    border: none;
+  }
+
+  &.left-edge tab:checked,
+  &.right-edge tab:checked {
+    border-width: 1px 0;
+  }
+}
+
+popover.messagepopover {
+  &.background { padding: 0; }
+
+  .popover-content-area { margin: 16px; }
+  .popover-action-area {
+    margin: 8px;
+
+    button:not(:first-child):not(:last-child) { margin: 0 4px; }
+  }
+}
+
+popover.popover-selector {
+  padding: 0;
+
+  list {
+    row { padding: 5px 0; }
+    row image { margin-left: 3px; margin-right: 10px; }
+  }
+}
+
+entry.search.preferences-search {
+  border: none;
+  border-right: 1px solid $borders_color;
+  border-bottom: 1px solid $borders_color;
+  border-radius: 0;
+}
+
+preferences stacksidebar.sidebar {
+  list { background-image: _solid($base_color); }
+
+  list separator { background-color: transparent; }
+}
+
+devhelppanel entry:focus,
+symboltreepanel entry:focus {
+  border-color: $borders_color
+}
+
+button.run-arrow-button {
+  min-width: 12px;
+}
+
+omnibar.linked > entry:not(:only-child) { border-style: solid; border-radius: 3px; margin-left: 1px; margin-right: 1px; }
+
+gstyleslidein {
+  #scale_box,
+  #strings_controls,
+  #palette_controls,
+  #components_controls {
+    button.toggle:checked { color: $fg_color; }
+  }
+}
+
+configurationview {
+  entry.flat { background: none; }
+  list { border-width: 0; }
+}
+
+//
+// Gnome-Software
+//
+
+button.round-button { // categories expander button
+  // > 3.25.90, dropped from upstream CSS
+  min-height: 28px;
+  min-width: 28px;
+  padding: 0;
+}
+
+window.background > box.vertical > searchbar { box-shadow: none; }
+
+window.background > box.vertical > overlay > stack > widget > stack {
+
+  // "Installed" stack
+  > box.vertical > scrolledwindow > viewport.frame > widget > list {
+    background-color: $bg_color; // override $base_color
+
+    // use asymmetrical separators
+    > separator {
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+    }
+  }
+
+  // "Updates" stack
+  widget > box.vertical.app-list {
+    // override $base_color
+    background-image: image($bg_color);
+
+    > box.vertical > list { background-color: $bg_color; }
+
+    // use asymmetrical separators
+    separator {
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+    }
+  }
+}
+
+.category_page_header_filter_box {
+  background-image: image($bg_color);
+  border-image: linear-gradient(to bottom, $solid_borders_color, $solid_borders_color) 0 0 1 0 / 0 0 1px 0 stretch;
+
+  button {
+    color: $insensitive_fg_color;
+    background-image: image($bg_color);
+    &:prelight { color: mix($fg_color, rgba($fg_color, 0.5), 50%); }
+    &:checked { color: $fg_color; }
+    &:disabled { color: rgba($insensitive_fg_color, 0.65); }
+  }
+}
+
+.application-details-infobar {
+  background-image: image($base_color);
+  border-image: linear-gradient(to bottom, $solid_borders_color, $solid_borders_color) 1 1 1 1 / 1px 1px 1px 1px stretch;
+}
+
+//
+// Gnome map
+//
+.maps-popover {
+  button.radio.layer-radio-button {
+    &:checked {
+      box-shadow: 0 0 0 2px $selected_bg_color;
+    }
+  }
 }
 
 //

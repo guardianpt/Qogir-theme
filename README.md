@@ -8,6 +8,12 @@ horst3180 - Arc gtk theme: https://github.com/horst3180/Arc-theme
 ## Info
 
 ### GTK+ 3.20 or later
+- Set windows button on gnome for a better experience.
+
+Gnome ≥ 3.22:
+
+    gsettings set org.gnome.desktop.wm.preferences button-layout appmenu:minimize,maximize,close
+
 
 ### GTK2 engines requirment
 - GTK2 engine Murrine 0.98.1.1 or later.
@@ -30,23 +36,43 @@ Search for the engines in your distributions repository or install the engines f
 
 ## Install
 
-Double-click to open that script file,
-Or open the terminal at current directory.
+Usage:  ./Install  [OPTIONS...]
 
-Run
+|  OPTIONS:    | |
+|:-------------|:-------------|
+| -d, --dest   | destination directory (Default: $HOME/.themes) |
+| -n, --name   | name (Default: Qogir) |
+| -c, --color  | color variant(s) (standard/light/dark) |
+| -m, --menu   | appmenu button variant(s) (standard/gnome) |
+| -i, --image  | Install theme with nautilus background image |
+| -s, --square | Install theme with square titlebutton |
+| -h, --help   | Show this help |
 
-    ./Install                     (Install all themes)
-
-    ./Install -t cir              (Install default circle titlebutton style themes)
-
-    ./Install -t win              (Install Windows 10 like titlebutton style themes)
-
-    ./Install_with_background_img (Install themes with nautilus background imge)
+**FOR EXAMPLE:**
+```sh
+./Install
+```
+(Install all themes)
+```sh
+./Install -m standard
+```
+(Install themes for appmenu button on header)
+```sh
+./Install -m gnome
+```
+(Install themes for appmenu button on panel)
+```sh
+./Install -i
+```
+(Install themes with nautilus background imge)
+```sh
+./Install -s
+```
+(Install themes with square titlebuttons)
 
 ## Screenshots
-![1](https://github.com/vinceliuice/Qogir-theme/blob/master/screenshots/screenshot01.png?raw=true)
-![2](https://github.com/vinceliuice/Qogir-theme/blob/master/screenshots/screenshot02.png?raw=true)
-![3](https://github.com/vinceliuice/Qogir-theme/blob/master/screenshots/screenshot03.png?raw=true)
-![4](https://github.com/vinceliuice/Qogir-theme/blob/master/screenshots/screenshot04.png?raw=true)
-![5](https://github.com/vinceliuice/Qogir-theme/blob/master/screenshots/screenshot05.png?raw=true)
-
+![1](https://github.com/vinceliuice/Qogir-theme/blob/images/screenshots/screenshot01.png?raw=true)
+![2](https://github.com/vinceliuice/Qogir-theme/blob/images/screenshots/screenshot02.png?raw=true)
+![3](https://github.com/vinceliuice/Qogir-theme/blob/images/screenshots/screenshot03.png?raw=true)
+![4](https://github.com/vinceliuice/Qogir-theme/blob/images/screenshots/screenshot04.png?raw=true)
+![5](https://github.com/vinceliuice/Qogir-theme/blob/images/screenshots/screenshot05.png?raw=true)
