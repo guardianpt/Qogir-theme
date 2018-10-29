@@ -4612,7 +4612,7 @@ button.emoji-section:last-child {
 
 terminal-window notebook,
 .mate-terminal notebook {
-  padding: 0 1px 1px;
+  padding: 0;
 }
 
 terminal-window notebook > header.top button,
