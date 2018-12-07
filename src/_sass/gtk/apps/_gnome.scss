@@ -22,10 +22,8 @@ terminal-window,
 //
 // Nautilus
 //
-
 %nautilus_backimage {
-  background-image: -gtk-scaled(url("assets/backimage#{$asset_suffix}.png"),
-                                url("assets/backimage#{$asset_suffix}@2.png"));
+  background-image: -gtk-scaled(url("assets/backimage#{$asset_suffix}.png"), url("assets/backimage#{$asset_suffix}@2.png"));
   background-repeat: no-repeat;
   background-position: bottom right;
 }
@@ -45,11 +43,16 @@ terminal-window,
 }
 
 %pathbar_box_button {
-  margin: 0;
-  padding: 1px 8px 3px 8px;
-  border-radius: 0;
   background: none;
   border: none;
+
+  &, &:hover, &:checked, &:active, &:disabled {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 6px 2px 6px;
+    min-height: 24px;
+    border-radius: 0;
+  }
 
   &:hover {
     color: $alt_header_fg;
@@ -73,12 +76,20 @@ terminal-window,
 
 .nautilus-window headerbar {
   .path-bar-box {
-    margin: $icon_padding 0;
+    margin-top: 6px;
+    margin-bottom: 6px;
     border-radius: 2px;
     color: $header_fg;
     background-color: transparent;
     border: 1px solid transparent;
-    button { @extend %pathbar_box_button; }
+
+    .path-bar {
+      padding: 0;
+      margin: 0;
+
+      button.flat.text-button.toggle,
+      button.flat.image-button.text-button.toggle { @extend %pathbar_box_button; }
+    }
 
     &.width-maximized {
       border: 1px solid if($titlebar == 'light', rgba(black, 0.12), rgba(white, 0.12));
@@ -171,6 +182,7 @@ terminal-window,
   }
 }
 
+%file_manager_img,
 .nautilus-window,
 .nautilus-window notebook,
 .nautilus-window notebook > stack {
@@ -465,9 +477,36 @@ button.documents-favorite:active:hover {
     transition: opacity 0.2s ease-out;
 }
 
-// /***************
-//  * Gnome-Usage *
-//  ***************/
+//
+// Gnome Contacts
+//
+window.background.csd {
+  > overlay > grid.horizontal {
+    > frame:dir(ltr) > border { // Removed ugly borders
+      border-top-width: 0;
+      border-left-width: 0;
+      border-bottom-width: 0;
+    }
+  }
+}
+
+//
+// Empathy
+//
+frame.sidebar.chat-sidebar > border {
+  border-right: none;
+}
+
+frame.sidebar.chat-sidebar {
+  frame.chat-status-area > border {
+    border-style: none;
+    border-top-style: solid;
+  }
+}
+
+//
+// Gnome-Usage
+//
 
 // FIXME: why was 'adwaita.css' used for all user-themes? :/
 widget {
@@ -696,6 +735,14 @@ popover.popover-selector {
   }
 }
 
+button.dzlmenubuttonitem.check { // menuitem buttons
+  label {
+    color: $fg_color;
+    &.dim-label { color: $fg_color; }
+  }
+  box > image { opacity: 0.87; }
+}
+
 entry.search.preferences-search {
   border: none;
   border-right: 1px solid $borders_color;
@@ -863,7 +910,7 @@ gf-candidate-box {
 }
 
 //
-//   Gnome-Logs
+// Gnome-Logs
 //
 
 $em-base: 16px;
@@ -1005,9 +1052,9 @@ window.background > box.vertical box.horizontal {
   }
 }
 
-// /************
-//  * Epiphany *
-//  ************/
+//
+// Epiphany
+//
 
 $question_bg_color: #FFEA00;
 
@@ -1115,9 +1162,9 @@ flowboxchild.bookmark-tag-widget {
   &-selected { color: $selected_fg_color; } // checked
 }
 
-// /*************
-//  * RhythmBox *
-//  *************/
+//
+// RhythmBox
+//
 
 // add top-border to inline-toolbar
 .sidebar-paned .inline-toolbar.horizontal.sidebar-toolbar {
@@ -1239,4 +1286,3 @@ stack {
     }
   }
 }
-
