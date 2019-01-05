@@ -14,7 +14,7 @@ SRC_DIR=$(cd $(dirname $0) && pwd)
 
 THEME_NAME=Qogir_Mod
 MENU_VARIANTS=('' '-gnome')
-COLOR_VARIANTS=('' '-light' '-dark')
+COLOR_VARIANTS=('' '-light' '-darker' '-dark')
 
 usage() {
   printf "%s\n" "Usage: $0 [OPTIONS...]"
