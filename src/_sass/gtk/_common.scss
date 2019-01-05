@@ -35,18 +35,22 @@
 .gtkstyle-fallback {
   background-color: $bg_color;
   color: $fg_color;
+
   &:hover {
     background-color: lighten($bg_color, 10%);
     color: $fg_color;
   }
+
   &:active {
     background-color: darken($bg_color, 10%);
     color: $fg_color;
   }
+
   &:disabled {
     background-color: $insensitive_bg_color;
     color: $insensitive_fg_color;
   }
+
   &:selected {
     background-color: $selected_bg_color;
     color: $selected_fg_color;
@@ -470,16 +474,20 @@ button {
         @include button(undecorated);
         color: $b_color;
       }
+
       &:hover {
+        @include button(suggested_destructive, lighten($b_color, 5%), $b_fg);
+      }
+
+      &:active, &:checked {
         @include button(suggested_destructive, lighten($b_color, 10%), $b_fg);
       }
-      &:active, &:checked {
-        @include button(suggested_destructive, darken($b_color, 10%), $b_fg);
-      }
+
       &.flat:disabled {
         @include button(undecorated);
         color: $insensitive_fg_color;
       }
+
       &:disabled { @include button(insensitive); }
     }
   }
@@ -863,10 +871,12 @@ modelbutton.flat {
     background-color: if($variant=='light', mix($fg_color,$bg_color,5%), mix($fg_color,$bg_color,10%));
     border: 1px solid $borders_color;
   }
+
   &:active, &:selected {
     border: 1px solid $sec_selected_bg_color;
     &, arrow { @extend %selected_items; }
   }
+
   &:checked { color: $fg_color; }
   &:disabled { color: $insensitive_fg_color; }
 
@@ -1093,14 +1103,17 @@ toolbar {
 }
 
 searchbar {
-  background-color: $bg_color;
+  padding: 0;
+  margin: 0;
   border: none;
-  box-shadow: inset 0 -1px $borders_color;
-  padding: 3px;
 
-  .titlebar & {
-    box-shadow: inset 0 -2px $borders_color, inset 0 -1px $base_color;  // Removed double borders under headerbar
-    entry, button { margin-bottom: 3px; }
+  > revealer > box {
+    padding: $cont_padding;
+    margin: -$cont_padding;
+    border-style: solid;
+    border-color: $borders_color;
+    background-color: $bg_color;
+    border-width: 0 0 1px;
   }
 }
 
@@ -1450,15 +1463,19 @@ headerbar {
         @include button(undecorated);
         color: $b_color;
       }
+
       &:hover {
+        @include button(suggested_destructive, lighten($b_color, 5%), $b_fg);
+      }
+
+      &:active, &:checked {
         @include button(suggested_destructive, lighten($b_color, 10%), $b_fg);
       }
-      &:active, &:checked {
-        @include button(suggested_destructive, darken($b_color, 10%), $b_fg);
-      }
+
       &.flat:disabled,
       &:disabled { @include button(header-insensitive); }
     }
+
     button.#{$b_type}:backdrop,
     button.#{$b_type}:backdrop {
       opacity: 0.8;
@@ -1671,6 +1688,7 @@ treeview.view {
       background-color: $selected_fg_color;
     }
   }
+
   &.trough { // progress bar trough in treeviews
     color: $fg_color;
     background-color: $borders_color;
@@ -1715,6 +1733,7 @@ treeview.view {
         border-color: $bg_color;
         background-image: none;
       }
+
       &:last-child {
         border-right-style: none;
         border-image: none;
@@ -1764,10 +1783,10 @@ menubar,
     }
 
     &:disabled {
-      color: rgba($header_fg, 0.5);
+      color: rgba($header_fg, 0.45);
     }
 
-    label { &:disabled { color: rgba($header_fg, 0.5); }}
+    label { &:disabled { color: rgba($header_fg, 0.45); }}
   }
 }
 
@@ -1799,7 +1818,7 @@ menu,
   menuitem {
     min-height: $small_size;
     min-width: $large_size;
-    padding: 4px 6px;
+    padding: 4px $cont_padding;
 
     &:hover {
       color: $selected_fg_color;
@@ -1961,77 +1980,93 @@ notebook {
 
           // tab border shadows
           @if $_pos==top {
-              &:not(:only-child) {
-                &:first-child { margin-left: $cont_padding; }
-                &:last-child { margin-right: $cont_padding; }
-              }
-              &:hover {
-                box-shadow: inset 0 -1px gtkalpha($selected_bg_color, 0.6), 0 1px gtkalpha($selected_bg_color, 0.6);
-              }
-              &:checked {
-                box-shadow: inset 0 -1px $selected_bg_color, 0 1px $selected_bg_color;
-              }
+            &:not(:only-child) {
+              &:first-child { margin-left: $cont_padding; }
+              &:last-child { margin-right: $cont_padding; }
+            }
+
+            &:hover {
+              box-shadow: inset 0 -1px gtkalpha($selected_bg_color, 0.6), 0 1px gtkalpha($selected_bg_color, 0.6);
+            }
+
+            &:checked {
+              box-shadow: inset 0 -1px $selected_bg_color, 0 1px $selected_bg_color;
+            }
           }
+
           @else if $_pos==bottom {
-              &:not(:only-child) {
-                &:first-child { margin-left: $cont_padding; }
-                &:last-child { margin-right: $cont_padding; }
-              }
-              &:hover {
-                box-shadow: inset 0 1px gtkalpha($selected_bg_color, 0.6), 0 -1px gtkalpha($selected_bg_color, 0.6);
-              }
-              &:checked {
-                box-shadow: inset 0 1px $selected_bg_color, 0 -1px $selected_bg_color;
-              }
+            &:not(:only-child) {
+              &:first-child { margin-left: $cont_padding; }
+              &:last-child { margin-right: $cont_padding; }
+            }
+
+            &:hover {
+              box-shadow: inset 0 1px gtkalpha($selected_bg_color, 0.6), 0 -1px gtkalpha($selected_bg_color, 0.6);
+            }
+
+            &:checked {
+              box-shadow: inset 0 1px $selected_bg_color, 0 -1px $selected_bg_color;
+            }
           }
+
           @else if $_pos==left {
-              &:not(:only-child) {
-                &:first-child { margin-top: $cont_padding; }
-                &:last-child { margin-bottom: $cont_padding; }
-              }
-              &:hover {
-                box-shadow: inset -1px 0 gtkalpha($selected_bg_color, 0.6), 1px 0 gtkalpha($selected_bg_color, 0.6);
-              }
-              &:checked {
-                box-shadow: inset -1px 0 $selected_bg_color, 1px 0 $selected_bg_color;
-              }
+            &:not(:only-child) {
+              &:first-child { margin-top: $cont_padding; }
+              &:last-child { margin-bottom: $cont_padding; }
+            }
+
+            &:hover {
+              box-shadow: inset -1px 0 gtkalpha($selected_bg_color, 0.6), 1px 0 gtkalpha($selected_bg_color, 0.6);
+            }
+
+            &:checked {
+              box-shadow: inset -1px 0 $selected_bg_color, 1px 0 $selected_bg_color;
+            }
           }
+
           @else if $_pos==right {
-              &:not(:only-child) {
-                &:first-child { margin-top: $cont_padding; }
-                &:last-child { margin-bottom: $cont_padding; }
-              }
-              &:hover {
-                box-shadow: inset 1px 0 gtkalpha($selected_bg_color, 0.6), -1px 0 gtkalpha($selected_bg_color, 0.6);
-              }
-              &:checked {
-                box-shadow: inset 1px 0 $selected_bg_color, -1px 0 $selected_bg_color;
-              }
+            &:not(:only-child) {
+              &:first-child { margin-top: $cont_padding; }
+              &:last-child { margin-bottom: $cont_padding; }
+            }
+
+            &:hover {
+              box-shadow: inset 1px 0 gtkalpha($selected_bg_color, 0.6), -1px 0 gtkalpha($selected_bg_color, 0.6);
+            }
+
+            &:checked {
+              box-shadow: inset 1px 0 $selected_bg_color, -1px 0 $selected_bg_color;
+            }
           }
         }
       }
     }
+
     // overflow arrows
     &.top, &.bottom {
       > tabs > arrow.up {
         -gtk-icon-source: -gtk-icontheme('pan-end-symbolic');
         &:last-child { margin-left: 2px; }
       }
+
       > tabs > arrow.down {
         -gtk-icon-source: -gtk-icontheme('pan-start-symbolic');
         &:first-child { margin-right: 2px; }
       }
     }
+
     &.left, &.right {
       > tabs > arrow.up {
         -gtk-icon-source: -gtk-icontheme('pan-down-symbolic');
         &:last-child { margin-top: 2px; }
       }
+
       > tabs > arrow.down {
         -gtk-icon-source: -gtk-icontheme('pan-up-symbolic');
         &:first-child { margin-bottom: 2px; }
       }
     }
+
     > tabs > arrow {
       color: $insensitive_fg_color;
 
@@ -2048,6 +2083,7 @@ notebook {
         color: mix($fg_color, rgba($fg_color, 0.5), 50%);
         transition: 200ms $ease-out-quad;
       }
+
       &:checked {
         color: $fg_color;
         transition: 300ms $ease-out-quad;
@@ -2067,6 +2103,7 @@ notebook {
           color: lighten(red, 15%);
           background-color: darken($bg_color, 5%);
         }
+
         &:active, &:active:hover {
           @extend %undecorated_button;
           color: $selected_bg_color;
@@ -2183,9 +2220,11 @@ switch {
     background-image: -gtk-scaled(url("assets/switch#{$l}-selected.png"),url("assets/switch#{$l}-selected@2.png"));
   }
 
-  headerbar switch#{$k},
-  .primary-toolbar switch#{$k} {
-    background-image: -gtk-scaled(url("assets/switch#{$l}-dark.png"),url("assets/switch#{$l}-dark@2.png"));
+  @if $titlebar == 'dark' or $variant == 'dark' {
+    // .primary-toolbar switch#{$k},
+    headerbar switch#{$k} {
+      background-image: -gtk-scaled(url("assets/switch#{$l}-dark.png"),url("assets/switch#{$l}-dark@2.png"));
+    }
   }
 }
 
@@ -2766,7 +2805,6 @@ calendar {
     color: transparentize($fg_color, 0.55);
 
     &:hover { color: $fg_color; }
-
     &:disabled { color: $insensitive_fg_color; }
   }
 
@@ -2825,8 +2863,8 @@ messagedialog { // Message Dialog styling
       border-top: 1px solid $borders_color;
 
       &:active, &:checked {
-        transition: background-color 0.00001s 0.3s;
-        animation: ripple_effect 0.3s cubic-bezier(0.0, 0.0, 0.2, 1);
+        transition: background-color 0.00001s 0.2s;
+        animation: ripple_effect 0.2s cubic-bezier(0.0, 0.0, 0.2, 1);
       }
     }
   }
@@ -2845,11 +2883,11 @@ messagedialog { // Message Dialog styling
   .dialog-action-area button:not(.suggested-action):not(.destructive-action) {
 
     &:hover {
-      background-color: gtkalpha($fg_color, 0.06);
+      background-color: rgba($fg_color, 0.06);
     }
 
     &:active, &:checked {
-      background-color: gtkalpha($fg_color, 0.1);
+      background-color: rgba($fg_color, 0.1);
       color: $fg_color;
     }
   }
@@ -2884,20 +2922,11 @@ filechooserbutton:drop(active) {
 //
 // dialog-vbox
 //
-
 messagedialog.background:not(.csd) {
   .dialog-vbox {
     .dialog-action-box {
       button { border-radius: 0; }
     }
-  }
-}
-
-// GtkAppChooserDialog
-dialog.background.csd {
-  .dialog-vbox {
-    searchbar { box-shadow: inset 0 -2px $borders_color, inset 0 -1px $bg_color; }
-    entry, button { margin-bottom: 3px; }
   }
 }
 
@@ -3582,19 +3611,23 @@ button.emoji-section {
   outline-offset: -4px;
   box-shadow: none;
   border: none;
+
   &:first-child { border-radius: 0 0 0 2px; }
   &:last-child { border-radius: 0 0 2px 0; }
 }
 
 .emoji {
-  min-width: 3em;
-  min-height: 3em;
-  padding: 0;
-  // font-size: large;
+  min-width: 16px;
+  min-height: 16px;
+  padding: 0 8px;
 
   widget {
-    transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+    transition: all 50ms cubic-bezier(0, 0, 0.2, 1);
 
-    &:hover { font-size: larger; }
+    &:hover {
+      background-color: $selected_bg_color;
+      color: $selected_fg_color;
+      border-radius: 3px;
+    }
   }
 }
