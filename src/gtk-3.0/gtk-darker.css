@@ -4728,11 +4728,6 @@ button.emoji-section:last-child {
   border-radius: 3px;
 }
 
-terminal-window notebook,
-.mate-terminal notebook {
-  padding: 0;
-}
-
 terminal-window notebook > header.top button,
 .mate-terminal notebook > header.top button {
   padding: 0;
