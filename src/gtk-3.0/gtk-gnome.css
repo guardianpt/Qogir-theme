@@ -8268,12 +8268,12 @@ treeview.view.sidebar.source-list, window.thunar .sidebar treeview.sidebar.sourc
 }
 
 treeview.view.sidebar.source-list.has-open-popup, treeview.view.sidebar.source-list:hover {
-  color: #C4CAD1;
-  background-color: #373941;
+  color: #646972;
+  background-color: #e7ebed;
 }
 
 treeview.view.sidebar.source-list:disabled {
-  color: rgba(196, 202, 209, 0.35);
+  color: rgba(100, 105, 114, 0.35);
 }
 
 treeview.view.sidebar.source-list:selected.has-open-popup, treeview.view.sidebar.source-list:selected:hover {
@@ -9078,8 +9078,8 @@ filechooser paned > separator {
 }
 
 .nemo-window .sidebar .view.has-open-popup, .nemo-window .sidebar .view:hover, .nemo-window .sidebar row.has-open-popup, .nemo-window .sidebar row:hover {
-  color: #C4CAD1;
-  background-color: #373941;
+  color: #646972;
+  background-color: #e7ebed;
 }
 
 .nemo-window .sidebar .view.expander, .nemo-window .sidebar row.expander {
