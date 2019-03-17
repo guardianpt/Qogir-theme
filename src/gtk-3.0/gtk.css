@@ -8027,8 +8027,8 @@ window.thunar .sidebar treeview.view {
 }
 
 window.thunar .sidebar treeview.view:not(:selected):hover {
-  color: #C4CAD1;
-  background-color: #373941;
+  color: #646972;
+  background-color: #e7ebed;
 }
 
 window.thunar notebook scrolledwindow.frame.standard-view {
