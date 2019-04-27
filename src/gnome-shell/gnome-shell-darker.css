@@ -1921,7 +1921,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 #dash {
   font-size: 1em;
-  color: #F6F6FB;
+  color: #D3DAE3;
   background-color: #32343D;
   border-color: rgba(0, 0, 0, 0.4);
   padding: 4px 0;
@@ -1990,11 +1990,25 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
   border: 1px solid #2679db;
 }
 
+#dash .app-well-app:checked .overview-icon,
+.right #dash .app-well-app:checked .overview-icon,
+.bottom #dash .app-well-app:checked .overview-icon,
+.top #dash .app-well-app:checked .overview-icon {
+  box-shadow: none;
+  background-color: rgba(82, 148, 226, 0.5);
+  border: 1px solid rgba(82, 148, 226, 0.5);
+}
+
+#dash .app-well-app:checked:hover .overview-icon,
+.right #dash .app-well-app:checked:hover .overview-icon,
+.bottom #dash .app-well-app:checked:hover .overview-icon,
+.top #dash .app-well-app:checked:hover .overview-icon,
 #dash .app-well-app:active:hover .overview-icon,
 .right #dash .app-well-app:active:hover .overview-icon,
 .bottom #dash .app-well-app:active:hover .overview-icon,
 .top #dash .app-well-app:active:hover .overview-icon {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(82, 148, 226, 0.75);
+  border: 1px solid #5294e2;
 }
 
 #dash .app-well-app-running-dot {
@@ -2002,33 +2016,6 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
   height: 2px;
   margin-bottom: 2px;
   background-color: #5294e2;
-}
-
-#dashtodockContainer .app-well-app-running-dot {
-  background: none;
-  width: 28px;
-  height: 4px;
-  box-shadow: none;
-}
-
-#dashtodockContainer .running1 .app-well-app-running-dot {
-  background-image: url("common-assets/dash/running1.svg");
-  box-shadow: none;
-}
-
-#dashtodockContainer .running2 .app-well-app-running-dot {
-  background-image: url("common-assets/dash/running2.svg");
-  box-shadow: none;
-}
-
-#dashtodockContainer .running3 .app-well-app-running-dot {
-  background-image: url("common-assets/dash/running3.svg");
-  box-shadow: none;
-}
-
-#dashtodockContainer .running4 .app-well-app-running-dot {
-  background-image: url("common-assets/dash/running4.svg");
-  box-shadow: none;
 }
 
 .show-apps .show-apps-icon {
@@ -2042,7 +2029,6 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 .show-apps .overview-icon {
   background-color: transparent;
   border-radius: 2px;
-  border: 0px solid;
   color: rgba(207, 218, 231, 0.8);
 }
 
@@ -2095,14 +2081,6 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
   transition-duration: 0ms;
   border: 1px solid rgba(211, 218, 227, 0.1);
   background-image: none;
-}
-
-.app-well-app-running-dot {
-  width: 20px;
-  height: 2px;
-  margin-bottom: 4px;
-  background-color: #5294e2;
-  box-shadow: none;
 }
 
 .search-provider-icon,
