@@ -112,8 +112,7 @@ $empty_shadow: 0 0 0 transparent;
 
   &.transparent #dash { // translucent-mode
     background-color: rgba($dash_bg, 0.75); // does not work
-    // FIXME: add lacked alpha via box-shadow property
-    box-shadow: inset 0 0 0 9999px rgba($dash_bg, 0.75);
+    box-shadow: none !important;
   }
 
   &:overview #dash { // overview-mode #1

@@ -3096,7 +3096,7 @@ StScrollBar StButton#vhandle:active, StScrollBar StButton#hhandle:active {
 
 #dashtodockContainer.transparent #dash {
   background-color: rgba(50, 52, 61, 0.75);
-  box-shadow: inset 0 0 0 9999px rgba(50, 52, 61, 0.75);
+  box-shadow: none !important;
 }
 
 #dashtodockContainer:overview #dash {
