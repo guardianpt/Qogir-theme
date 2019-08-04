@@ -6394,10 +6394,6 @@ list.tilix-session-sidebar button.tilix-sidebar-close-button:active, list.tilix-
   background-image: image(#ec1b22);
 }
 
-.geary-accounts-editor-pane > scrolledwindow.frame {
-  border: none;
-}
-
 window.background.csd > box.vertical > stack > box.horizontal > list {
   border-right: 1px solid #cad5df;
 }
@@ -9610,6 +9606,10 @@ window#GearyMainWindow .titlebar:backdrop {
   background-color: #2b2e37;
 }
 
+window#GearyMainWindow .titlebar headerbar.geary-titlebar > separator {
+  margin: 0 -10px 0 0;
+}
+
 window#GearyMainWindow > box.vertical > paned > separator {
   background-image: none;
 }
@@ -9633,6 +9633,10 @@ window#GearyMainWindow > box.vertical > paned > separator {
 }
 
 stack#conversation_viewer scrolledwindow.geary-conversation-scroller > viewport.frame {
+  border: none;
+}
+
+.geary-accounts-editor-pane > scrolledwindow.frame {
   border: none;
 }
 
